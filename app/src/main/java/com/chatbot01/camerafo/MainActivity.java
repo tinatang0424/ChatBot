@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.speech.RecognitionListener;
@@ -11,11 +12,13 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -36,6 +39,7 @@ import io.fotoapparat.preview.FrameProcessor;
 import io.fotoapparat.result.PhotoResult;
 import io.fotoapparat.view.CameraView;
 import io.fotoapparat.view.FocusView;
+import me.itangqi.waveloadingview.WaveLoadingView;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
     private FaceDetector faceDetector;
     private View capture;
     private ImageView face;
+    private ImageView emotion;
     private Fotoapparat fotoapparat;
     private File imgFile;
     private TextView tv_result;     //顯示STT結果/使用者說的話
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
         focusView = findViewById(R.id.focusView);
         capture = findViewById(R.id.capture);
         face = findViewById(R.id.face);
+        emotion = findViewById(R.id.iv_mood);
 
         cameraView.setVisibility(View.VISIBLE);
         faceDetector = FaceDetector.create(this);
@@ -90,6 +96,17 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
 
         tv_result = findViewById(R.id.tv_result);
         tv_response = findViewById(R.id.tv_response);
+
+        tv_result.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        tv_response.setSelected(true);
+
+
+        WaveLoadingView mWaveLoadingView = findViewById(R.id.waveLoadingView);
+        mWaveLoadingView.setProgressValue(50);
+        mWaveLoadingView.setAmplitudeRatio(60);
+        mWaveLoadingView.setAnimDuration(1500);
+        mWaveLoadingView.startAnimation();
 
     }
 
@@ -191,13 +208,22 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
+                        Log.i("errorrr",e.toString());
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
                             mood = response;
-                            Log.i("mood",mood);
+                            Log.i("my_mood",mood);
+                            if(mood=="happy") {
+                                runOnUiThread(() -> emotion.setBackgroundResource(R.drawable.ic_smile));
+                            }
+                            if(mood=="unhappy") {
+                                runOnUiThread(() -> emotion.setBackgroundResource(R.drawable.ic_sad));
+                            }
+                            if(mood=="normal") {
+                                runOnUiThread(() -> emotion.setBackgroundResource(R.drawable.ic_relax));
+                            }
                     }
                 });
 
@@ -321,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
 
     @Override
     public void onError(int error) {
-        runOnUiThread(() -> tv_result.setText("錯誤"));
+        runOnUiThread(() -> tv_result.setText("User Say"));
     }
 
     //STT結果

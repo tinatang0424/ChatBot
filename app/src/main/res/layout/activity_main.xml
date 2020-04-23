@@ -41,17 +41,48 @@
                 android:tag="top_box"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/gradient"
+                android:background="@color/white"
                 android:layout_weight="1">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/white"
+                    android:layout_marginTop="55dp"
+                    android:elevation="2dp"/>
+                <me.itangqi.waveloadingview.WaveLoadingView
+                    android:id="@+id/waveLoadingView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:wlv_progressValue="40"
+                    app:wlv_shapeType="rectangle"
+                    app:wlv_triangle_direction="north"
+                    app:wlv_waveAmplitude="70"
+                    app:wlv_waveColor="@color/deep_purple"/>
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/animation_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="100dp"
                     app:lottie_rawRes="@raw/bot"
                     app:lottie_loop="true"
                     app:lottie_autoPlay="true"/>
+
+                <TextView
+                    android:id="@+id/tv_response"
+                    android:layout_width="250dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/rec_wp"
+                    android:text="Robot Say"
+                    android:textColor="#E7D1F5"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:layout_gravity="center|bottom"
+                    android:layout_marginBottom="40dp"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"/>
             </FrameLayout>
 
             <FrameLayout
@@ -59,49 +90,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:tag="bottom_box"
-                android:layout_weight="4"
+                android:layout_weight="3.5"
                 android:layout_gravity="bottom"
-                android:background="#FFFFFF">
+                android:background="@color/white">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_robot"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="10dp"/>
-                <TextView
-                    android:id="@+id/tv_response"
-                    android:layout_width="250dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/rec_wp"
-                    android:text="Robot Say"
-                    android:gravity="center"
-                    android:textSize="16dp"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginTop="15dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#DDDDDD"/>
                 <ImageView
                     android:id="@+id/capture"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_gravity="bottom|end"
                     tools:ignore="ContentDescription"
-                    android:src="@drawable/ic_mic"
-                    android:layout_marginBottom="15dp"/>
+                    android:src="@drawable/ic_mic" />
 
                 <TextView
                     android:id="@+id/tv_result"
                     android:layout_width="250dp"
                     android:layout_height="40dp"
                     android:text="User Say"
+                    android:textColor="#7EC7E2"
                     android:gravity="center"
                     android:textSize="16dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:padding="10dp"
                     android:layout_gravity="bottom"
-                    android:background="@drawable/rec_wb"
-                    android:layout_marginBottom="15dp"/>
+                    android:background="@drawable/rec_bb"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:maxLines="15"/>
+
+                <ImageView
+                    android:id="@+id/iv_mood"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top"
+                    android:background="@drawable/ic_relax"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"/>
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="250dp"
+                    android:text="70%"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textColor="#FFBF00"
+                    android:layout_marginTop="20dp"/>
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="230dp"
+                    android:layout_height="40dp"
+                    android:max="100"
+                    android:progress="70"
+                    android:progressTint="#FFBF00"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"/>
+
             </FrameLayout>
         </LinearLayout>
 
@@ -144,9 +196,8 @@
                 </FrameLayout>
 
             </LinearLayout>
-
         </RelativeLayout>
-
     </Toolbar>
+
 
 </RelativeLayout>
