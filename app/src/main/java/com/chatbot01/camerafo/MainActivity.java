@@ -189,8 +189,8 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
     //http上傳照片
     public void uploadImg() {
         final OkHttpClient client = new OkHttpClient().newBuilder()
-                .connectTimeout(1000, TimeUnit.MILLISECONDS)
-                .readTimeout(1000, TimeUnit.MILLISECONDS)
+                .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                .readTimeout(10000, TimeUnit.MILLISECONDS)
                 .build();
 
         OkHttpUtils.initClient(client);
@@ -215,15 +215,20 @@ public class MainActivity extends AppCompatActivity implements RecognitionListen
                     public void onResponse(String response, int id) {
                             mood = response;
                             Log.i("my_mood",mood);
-                            if(mood=="happy") {
+                            if(mood.equals("happy")) {
+                                Log.d("my_mood","happyhappyhappy");
                                 runOnUiThread(() -> emotion.setBackgroundResource(R.drawable.ic_smile));
                             }
-                            if(mood=="unhappy") {
+                            if(mood.equals("unhappy"
+                            )) {
+                                Log.d("my_mood","unhappyunhappyunhappy");
                                 runOnUiThread(() -> emotion.setBackgroundResource(R.drawable.ic_sad));
                             }
-                            if(mood=="normal") {
+                            if(mood.equals("normal")) {
+                                Log.d("my_mood","normalnormalnormal");
                                 runOnUiThread(() -> emotion.setBackgroundResource(R.drawable.ic_relax));
                             }
+
                     }
                 });
 
